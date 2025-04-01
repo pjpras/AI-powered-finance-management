@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const jwtSecret = "prashant@123"
 const authMiddleware = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1];
     if (!token) {
@@ -7,7 +7,7 @@ const authMiddleware = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'jwtSecret'); // Replace with your actual secret
+        const decoded = jwt.verify(token, jwtSecret); // Replace with your actual secret
         req.user = { id: decoded.userId }; // Attach user ID to the request object
         next();
     } catch (error) {

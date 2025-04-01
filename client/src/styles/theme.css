@@ -1,0 +1,136 @@
+:root {
+  /* Elegant Color Palette */
+  --primary: #243746;         /* Deep navy */
+  --secondary: #3b5876;       /* Medium blue */
+  --accent: #d4af37;          /* Gold accent */
+  --accent-light: #f1e7c5;    /* Light gold */
+  --background: #f8f9fa;      /* Light gray background */
+  --card-bg: #ffffff;         /* White card background */
+  --text: #2c3e50;            /* Dark text */
+  --text-light: #6c757d;      /* Medium gray text */
+  --success: #2e7d32;         /* Forest green */
+  --warning: #e6a23c;         /* Amber */
+  --error: #c53030;           /* Deep red */
+  
+  /* Typography - Updated with more elegant fonts */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-secondary: 'Playfair Display', serif;
+  --font-headings: 'Montserrat', sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+  
+  /* Borders */
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+}
+
+/* Global styles */
+body {
+  font-family: var(--font-primary);
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-secondary);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--primary);
+}
+
+h4, h5, h6 {
+  font-family: var(--font-headings);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+button, .btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover, .btn:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+button.accent, .btn-accent {
+  background-color: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+button.accent:hover, .btn-accent:hover {
+  background-color: #b8a360; /* Slightly darker gold */
+}
+
+input, select, textarea {
+  border: 1px solid #ddd;
+  padding: 0.85rem 1rem;
+  border-radius: var(--border-radius-sm);
+  width: 100%;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+/* Animation for elements */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.app-name {
+  font-family: var(--font-secondary);
+  letter-spacing: 0.5px;
+}
