@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
     try{
-        await mongoose.connect('mongodb://localhost:27017/financeDB', {
+        // Use environment variable instead of hardcoded connection string
+        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/financeDB', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

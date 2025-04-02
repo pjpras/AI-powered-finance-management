@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
   Link,
+  useLocation,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login";
@@ -44,8 +45,10 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
-function App() {
+// Navigation component with location awareness
+const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const location = useLocation();
 
   // Handle logout
   const handleLogout = () => {
@@ -68,72 +71,78 @@ function App() {
   }, []);
 
   return (
+    <div className="navbar">
+      <div className="logo-container">
+        <img className="logo" src={logo} alt="Financial Elegance" />
+        <span className="app-name">AI Finance Management</span>
+      </div>
+      <nav className="nav-links">
+        {isLoggedIn ? (
+          <>
+            <Link
+              to="/dashboard"
+              className={
+                location.pathname.includes("/dashboard") ? "active" : ""
+              }
+            >
+              Dashboard
+            </Link>
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className={location.pathname === "/login" ? "active" : ""}
+            >
+              Login
+            </Link>
+            <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+              Sign Up
+            </Link>
+          </>
+        )}
+      </nav>
+    </div>
+  );
+};
+
+function App() {
+  return (
     <Router>
       <div className="App">
-        <div className="navbar">
-          <div className="logo-container">
-            <img className="logo" src={logo} alt="Financial Elegance" />
-            <span className="app-name">AI Finance Management </span>
-          </div>
-          <nav className="nav-links">
-            {isLoggedIn ? (
+        <Routes>
+          <Route
+            path="*"
+            element={
               <>
-                <Link
-                  to="/dashboard"
-                  className={
-                    window.location.pathname.includes("/dashboard")
-                      ? "active"
-                      : ""
-                  }
-                >
-                  Dashboard
-                </Link>
-                <button className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
+                <Navigation />
+                <main className="main-content">
+                  <Routes>
+                    <Route path="/" element={<Signup />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route
+                      path="/dashboard/*"
+                      element={
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </main>
+                <footer className="app-footer">
+                  <p>
+                    © {new Date().getFullYear()} FinSight | Your
+                    Sophisticated Financial Companion
+                  </p>
+                </footer>
               </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className={
-                    window.location.pathname === "/login" ? "active" : ""
-                  }
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/"
-                  className={window.location.pathname === "/" ? "active" : ""}
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/dashboard/*"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-
-        <footer className="app-footer">
-          <p>
-            © {new Date().getFullYear()} Financial Elegance | Your Sophisticated
-            Financial Companion
-          </p>
-        </footer>
+            }
+          />
+        </Routes>
       </div>
     </Router>
   );

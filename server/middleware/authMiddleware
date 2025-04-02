@@ -1,18 +1,19 @@
-const jwt = require('jsonwebtoken');
-const jwtSecret = "prashant@123"
-const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET || "prashant@123"; // Use environment variable
 
-    try {
-        const decoded = jwt.verify(token, jwtSecret); // Replace with your actual secret
-        req.user = { id: decoded.userId }; // Attach user ID to the request object
-        next();
-    } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
-    }
+const authMiddleware = (req, res, next) => {
+  const token = req.header("Authorization")?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "No token, authorization denied" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    req.user = { id: decoded.userId };
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
 };
 
 module.exports = authMiddleware;
