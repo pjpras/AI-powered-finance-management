@@ -18,9 +18,12 @@ const Dashboard = () => {
     const fetchExpenses = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await axios.get("http://localhost:5000/api/expenses", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/expenses`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setExpenses(response.data);
       } catch (error) {
         console.error(

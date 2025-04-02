@@ -1,9 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-const expenseRoutes = require('./routes/expenseRoutes');
+const expenseRoutes = require("./routes/expenseRoutes");
 
 dotenv.config();
 
@@ -16,7 +18,7 @@ connectDB();
 
 //basic route
 app.use("/api/auth", authRoutes);
-app.use('/api/expenses', expenseRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 const PORT = process.env.PORT || 5000;
 

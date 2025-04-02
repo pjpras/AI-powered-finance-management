@@ -57,7 +57,7 @@ const Transactions = ({ expenses, setExpenses }) => {
       if (editingExpense) {
         // Update existing expense
         response = await axios.put(
-          `http://localhost:5000/api/expenses/${editingExpense._id}`,
+          `${process.env.REACT_APP_API_URL}/api/expenses/${editingExpense._id}`,
           newExpense,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -75,7 +75,7 @@ const Transactions = ({ expenses, setExpenses }) => {
       } else {
         // Add new expense
         response = await axios.post(
-          "http://localhost:5000/api/expenses",
+          `${process.env.REACT_APP_API_URL}/api/expenses`,
           newExpense,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -120,9 +120,12 @@ const Transactions = ({ expenses, setExpenses }) => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/expenses/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // Update state
       setExpenses((prevExpenses) =>
