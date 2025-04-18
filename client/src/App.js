@@ -6,6 +6,7 @@ import {
   Navigate,
   Link,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login";
@@ -27,6 +28,8 @@ fontLinks.forEach((href) => {
   document.head.appendChild(link);
 });
 
+
+
 // Protected route component
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -47,13 +50,15 @@ const ProtectedRoute = ({ children }) => {
 
 // Navigation component with location awareness
 const Navigation = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [isLoggedIn, setIsLoggedIn] = useState();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    navigate("/login");
   };
 
   // Effect to check login status on mount and token changes
@@ -62,13 +67,9 @@ const Navigation = () => {
       setIsLoggedIn(!!localStorage.getItem("token"));
     };
 
-    window.addEventListener("storage", checkLoginStatus);
     checkLoginStatus();
 
-    return () => {
-      window.removeEventListener("storage", checkLoginStatus);
-    };
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className="navbar">
